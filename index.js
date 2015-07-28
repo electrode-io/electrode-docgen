@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var fs = require('fs');
 var reactDocs = require('react-docgen');
 var doctrine = require('doctrine');
