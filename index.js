@@ -53,12 +53,13 @@ glob(program.src + '/*.jsx', function(er, files) {
       }
       componentInfo.hasProps = false;
       if (componentInfo.props) {
-         for (var p in componentInfo.props) {
-          componentInfo.hasProps = true;
+        for (var p in componentInfo.props) {
           var pr = componentInfo.props[p];
+          componentInfo.hasProps = true;
           _parseTags(pr.description, pr);
-         }
+        }
       }
+      delete componentInfo.props.children;
       metadata.components.push(componentInfo);
     } catch(e) {
     }
