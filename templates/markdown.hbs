@@ -1,0 +1,27 @@
+# {{title}} ({{library}})
+
+{{description}}
+
+{{#each components}}
+## {{component}}
+
+{{description}}
+
+{{#if hasProps}}
+### Properties
+
+| Property | Type | Description | Default |
+| -------- | ---- | ----------- | ------- |
+{{#each props}}
+| *{{@key}}* | {{type.name}} | {{description}} | {{defaultValue.value}}
+{{/each}}
+{{/if}}
+
+### import
+
+```jsx
+import {{import}} from "{{../library}}";
+```
+
+<hr/>
+{{/each}}
