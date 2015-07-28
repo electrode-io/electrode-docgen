@@ -1,5 +1,5 @@
 {
-  "name": "electrode-docgen",
+  "name": "@walmart/electrode-docgen",
   "version": "0.0.1",
   "description": "Electrode document generator",
   "main": "index.js",
