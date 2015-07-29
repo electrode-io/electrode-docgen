@@ -8,6 +8,28 @@ var glob = require('glob');
 var async = require('async');
 var handlebars = require('handlebars');
 
+var _parsePlayground = function(str) {
+  var code = str.match(/(``|```)([\s\S]*)(``|```)/);
+  if (code) {
+    code = code[0];
+    code = code.replace(/(``|```)\s*\n/g,'');
+    code = code.replace(/(```|``)/g,'');
+  }
+  str = str.replace(/(``|```)([\s\S]*)(``|```)/, '');
+  str = str.replace(/(``|```)/g, '');
+  var flags = {};
+  str = str.replace(/!([\s\S]*)!/, function(found) {
+    found = found.replace(/!/g, '');
+    flags[found] = true;
+    return '';
+  });
+  return {
+    title: str,
+    flags: flags,
+    code: code
+  };
+};
+
 var _parseTags = function(str, target) {
   delete target.description;
   var parsed = doctrine.parse(str);
@@ -15,14 +37,21 @@ var _parseTags = function(str, target) {
   for (var t in parsed.tags) {
     var tk = parsed.tags[t].title;
     var tv = parsed.tags[t].description;
-    if (target[tk]) {
-      target[tk] = [target[tk]];
-      target[tk].push(tv);
+    if (tk === 'playground') {
+      if (target[tk] === undefined) {
+        target[tk] = [];
+      }
+      target[tk].push(_parsePlayground(tv));
     } else {
-      target[tk] = tv;
+      if (target[tk]) {
+        target[tk] = [target[tk]];
+        target[tk].push(tv);
+      } else {
+        target[tk] = tv;
+      }
     }
   }
-}
+};
 
 program
   .version('0.0.1')
@@ -47,7 +76,6 @@ glob(program.src + '/*.jsx', function(er, files) {
     var src = fs.readFileSync(file);
     try {
       var componentInfo = reactDocs.parse(src);
-      // console.log(JSON.stringify(componentInfo, null, 2));
       if (componentInfo.description) {
         _parseTags(componentInfo.description, componentInfo);
       }
@@ -60,6 +88,7 @@ glob(program.src + '/*.jsx', function(er, files) {
         }
       }
       delete componentInfo.props.children;
+      delete componentInfo.props.className;
       metadata.components.push(componentInfo);
     } catch(e) {
     }
