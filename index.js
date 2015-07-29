@@ -23,6 +23,8 @@ var _parsePlayground = function(str) {
     flags[found] = true;
     return '';
   });
+  str = str.replace(/^\s+/, '');
+  str = str.replace(/\s+$/, '');
   return {
     title: str,
     flags: flags,
