@@ -14,7 +14,7 @@ handlebars.registerHelper('defaultProp', function(options) {
   if (str.length > 50) {
     str = str.substring(0, 50) + '...';
   }
-  return '`' + str + '`';
+  return str.length > 0 ? '`' + str + '`' : "";
 });
 
 var _parsePlayground = function(str) {
@@ -42,6 +42,9 @@ var _parsePlayground = function(str) {
 };
 
 var _parseTags = function(str, target) {
+  if (str === undefined) {
+    return;
+  }
   delete target.description;
   var parsed = doctrine.parse(str);
   target.description = parsed.description;
@@ -105,6 +108,8 @@ glob(program.src + '/*.jsx', function(er, files) {
         metadata.components.push(componentInfo);
       }
     } catch(e) {
+      // console.log(e.stack);
+      // console.log(e);
     }
     done();
   }, function() {
