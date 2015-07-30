@@ -8,6 +8,15 @@ var glob = require('glob');
 var async = require('async');
 var handlebars = require('handlebars');
 
+handlebars.registerHelper('defaultProp', function(options) {
+  var str = options.fn(this);
+  str = str.replace(/\s+/g,' ');
+  if (str.length > 50) {
+    str = str.substring(0, 50) + '...';
+  }
+  return '`' + str + '`';
+});
+
 var _parsePlayground = function(str) {
   var code = str.match(/(``|```)([\s\S]*)(``|```)/);
   if (code) {

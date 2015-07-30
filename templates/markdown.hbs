@@ -13,7 +13,7 @@
 | Property | Type | Description | Default |
 | -------- | ---- | ----------- | ------- |
 {{#each props}}
-| *{{@key}}* | {{type.name}} | {{description}} | {{defaultValue.value}}
+| *{{@key}}* | {{type.name}} | {{description}} | {{#defaultProp}}{{defaultValue.value}}{{/defaultProp}}
 {{/each}}
 {{/if}}
 
