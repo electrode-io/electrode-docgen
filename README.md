@@ -35,6 +35,12 @@ Standard Markdown format in the description.
 @import {Fixie}
 ```
 
+### Private components
+
+```
+@private
+```
+
 ### Playgrounds
 
 ```

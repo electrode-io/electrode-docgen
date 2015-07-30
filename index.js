@@ -78,6 +78,7 @@ glob(program.src + '/*.jsx', function(er, files) {
     var src = fs.readFileSync(file);
     try {
       var componentInfo = reactDocs.parse(src);
+      componentInfo.fileName = file;
       if (componentInfo.description) {
         _parseTags(componentInfo.description, componentInfo);
       }
@@ -91,7 +92,9 @@ glob(program.src + '/*.jsx', function(er, files) {
       }
       delete componentInfo.props.children;
       delete componentInfo.props.className;
-      metadata.components.push(componentInfo);
+      if (componentInfo.private === undefined) {
+        metadata.components.push(componentInfo);
+      }
     } catch(e) {
     }
     done();
