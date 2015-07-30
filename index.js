@@ -82,6 +82,8 @@ glob(program.src + '/*.jsx', function(er, files) {
       if (componentInfo.description) {
         _parseTags(componentInfo.description, componentInfo);
       }
+      delete componentInfo.props.children;
+      delete componentInfo.props.className;
       componentInfo.hasProps = false;
       if (componentInfo.props) {
         for (var p in componentInfo.props) {
@@ -90,8 +92,6 @@ glob(program.src + '/*.jsx', function(er, files) {
           _parseTags(pr.description, pr);
         }
       }
-      delete componentInfo.props.children;
-      delete componentInfo.props.className;
       if (componentInfo.private === undefined) {
         metadata.components.push(componentInfo);
       }
