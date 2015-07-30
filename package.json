@@ -1,6 +1,6 @@
 {
   "name": "@walmart/electrode-docgen",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Electrode document generator",
   "main": "index.js",
   "scripts": {
