@@ -96,6 +96,7 @@ glob(program.src + '/*.jsx', function(er, files) {
       }
       delete componentInfo.props.children;
       delete componentInfo.props.className;
+      delete componentInfo.props.style;
       componentInfo.hasProps = false;
       if (componentInfo.props) {
         for (var p in componentInfo.props) {
