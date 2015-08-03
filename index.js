@@ -67,12 +67,20 @@ var _parseTags = function(str, target) {
   }
 };
 
+var _demoReplace = function(code, section, content) {
+  var re = new RegExp('(\/\/\/ start ' + section + "\n" + '[\\s\\S]*\/\/\/ end ' + section + ')');
+  content = '/// start ' + section + "\n" + content + '/// end ' + section;
+  code = code.replace(re, content);
+  return code;
+}
+
 program
   .version('0.0.1')
   .option('-s --src <dir>', 'Source location', null, 'src')
   .option('-p --package <package>', 'Package file', null, 'package.json')
   .option('--metadata <file>', 'Metadata output file')
   .option('--markdown <file>', 'Markdown output file')
+  .option('--demo <dir>', 'Demo output directory')
   .parse(process.argv);
 
 var pkgJSON = fs.readFileSync(program.package);
@@ -132,6 +140,54 @@ glob(program.src + '/*.jsx', function(er, files) {
       var template = handlebars.compile(templateSource.toString(), {noEscape: true});
       var result = template(metadata);
       fs.writeFileSync(program.markdown, result);
+    }
+
+    if (program.demo) {
+      var index = fs.readFileSync(program.demo + '/index.jsx').toString();
+
+      var imports = "";
+      var examples = {};
+      var eIndex = 1;
+      for (var c in metadata.components) {
+        var comp = metadata.components[c];
+        if (comp.playground) {
+          imports += "import " + comp.component + " from '../" + comp.fileName + "';\n";
+          for (var p in comp.playground) {
+            var pg = comp.playground[p];
+
+            var example = "example" + eIndex;
+            examples[example] = {
+              component: comp,
+              playground: pg
+            };
+
+            imports += "var " + example + " = require('raw!./examples/" + example + ".example');\n";
+
+            fs.writeFileSync(program.demo + '/examples/' + example + '.example', pg.code);
+
+            eIndex++;
+          }
+        }
+      }
+      index = _demoReplace(index, 'imports', imports);
+
+      var render = "";
+      render += "    return (\n";
+      render += "      <div className=\"component-documentation\">\n";
+      for (var e in examples) {
+        var example = examples[e];
+        render += "        <h3 id={\"" + example.playground.title + "\"}>" + example.playground.title + "</h3>\n";
+        render += "        <Playground\n";
+        render += "          codeText={" + e + "}\n";
+        render += "          scope={assign({React, " + example.component.component + "}, this.props.scope || {})}\n";
+        render += "          noRender={" + ( example.playground.flags.noRenderFalse ? 'false' : 'true' ) + "}/>\n";
+      }
+      render += "      </div>\n";
+      render += "    );\n";
+      index = _demoReplace(index, 'render', render);
+
+      console.log('Writing ' + program.demo + '/index.jsx');
+      fs.writeFileSync(program.demo + '/index.jsx', index);
     }
   });
 });
