@@ -6,16 +6,7 @@ var doctrine = require('doctrine');
 var program = require('commander');
 var glob = require('glob');
 var async = require('async');
-var handlebars = require('handlebars');
-
-handlebars.registerHelper('defaultProp', function(options) {
-  var str = options.fn(this);
-  str = str.replace(/\s+/g,' ');
-  if (str.length > 50) {
-    str = str.substring(0, 50) + '...';
-  }
-  return str.length > 0 ? '`' + str + '`' : "";
-});
+var generateMarkdown = require('./generate-markdown');
 
 var _parsePlayground = function(str) {
   var code = str.match(/(``|```)([\s\S]*)(``|```)/);
@@ -75,7 +66,7 @@ var _demoReplace = function(code, section, content) {
 }
 
 program
-  .version('0.0.1')
+  .version('0.0.12')
   .option('-s --src <dir>', 'Source location', null, 'src')
   .option('-p --package <package>', 'Package file', null, 'package.json')
   .option('--metadata <file>', 'Metadata output file')
@@ -136,10 +127,7 @@ glob(program.src + '/*.jsx', function(er, files) {
     }
 
     if (program.markdown) {
-      var templateSource = fs.readFileSync(__dirname + '/templates/markdown.hbs');
-      var template = handlebars.compile(templateSource.toString(), {noEscape: true});
-      var result = template(metadata);
-      fs.writeFileSync(program.markdown, result);
+      fs.writeFileSync(program.markdown, generateMarkdown.generateLibraryDocs(metadata));
     }
 
     if (program.demo) {

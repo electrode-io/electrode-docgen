@@ -21,6 +21,8 @@
     "doctrine": "^0.6.4",
     "glob": "^5.0.14",
     "handlebars": "^3.0.3",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
     "react-docgen": "^2.0.0"
   }
 }

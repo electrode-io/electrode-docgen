@@ -18,9 +18,10 @@ Or in `package.json`
 ```
   "scripts": {
     ...
-    "generate": "npm run generate-metadata && npm run generate-documentation",
+    "generate": "npm run generate-metadata && npm run generate-documentation && npm run generate-demo",
     "generate-metadata": "electrode-docgen --package ./package.json --src ./src --metadata components.json",
-    "generate-documentation": "electrode-docgen --package ./package.json --src ./src --markdown components.md"
+    "generate-documentation": "electrode-docgen --package ./package.json --src ./src --markdown components.md",
+    "generate-demo": "electrode-docgen --package ./package.json --src ./src --demo demo"
   }
 ```
 
@@ -63,3 +64,16 @@ Fixie
 </div>
 ``
 ```
+
+## Auto generated demo
+
+```
+/// start imports
+/// end imports
+```
+
+```
+/// start render
+/// end render
+```
+

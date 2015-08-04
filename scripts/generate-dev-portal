@@ -1,0 +1,7 @@
+node dev-portal-generate.js --components ../layout/components.json --portal ~/projects/SolutionDocumentation
+node dev-portal-generate.js --components ../base/components.json --portal ~/projects/SolutionDocumentation
+node dev-portal-generate.js --components ../interactive/components.json --portal ~/projects/SolutionDocumentation
+node dev-portal-generate.js --components ../accordion/components.json --portal ~/projects/SolutionDocumentation
+node dev-portal-generate.js --components ../carousel/components.json --portal ~/projects/SolutionDocumentation
+node dev-portal-generate.js --components ../containers/components.json --portal ~/projects/SolutionDocumentation
+node dev-portal-generate.js --components ../infograph/components.json --portal ~/projects/SolutionDocumentation
