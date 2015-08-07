@@ -1,6 +1,8 @@
 Electrode Documentation Generator
 =================================
 
+> Before getting started, please make sure you read the [React Developer Guide](https://gecgithub01.walmart.com/react/react-dev-guide)!
+
 A custom metadata extractor for the Electrode framework.
 
 ## Running it
@@ -77,3 +79,10 @@ Fixie
 /// end render
 ```
 
+## Issues
+
+Before submitting an issue, please see the [Issue Submission Guidelines](https://gecgithub01.walmart.com/react/react-dev-guide#submitting-issues)
+
+## Contributing
+
+If you're interested in contributing, see the [React Developer Guide's Contribution Guide](https://gecgithub01.walmart.com/react/react-dev-guide#contributing)
