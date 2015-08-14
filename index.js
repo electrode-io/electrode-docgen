@@ -149,7 +149,7 @@ glob(program.src + '/*.jsx', function(er, files) {
               playground: pg
             };
 
-            imports += "var " + example + " = require('raw!./examples/" + example + ".example');\n";
+            imports += "import " + example + " from 'raw!./examples/" + example + ".example';\n";
 
             fs.writeFileSync(program.demo + '/examples/' + example + '.example', pg.code);
 
