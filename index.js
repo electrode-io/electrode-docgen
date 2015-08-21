@@ -7,6 +7,8 @@ var program = require('commander');
 var glob = require('glob');
 var async = require('async');
 var generateMarkdown = require('./generate-markdown');
+var markdown = require('markdown-js').makeHtml;
+var indentString = require('indent-string');
 
 var _parsePlayground = function(str) {
   var code = str.match(/(``|```)([\s\S]*)(``|```)/);
@@ -159,6 +161,8 @@ glob(program.src + '/*.jsx', function(er, files) {
       }
       index = _demoReplace(index, 'imports', imports);
 
+      var shownUsage = {};
+
       var render = "";
       render += "    return (\n";
       render += "      <div className=\"component-documentation\">\n";
@@ -169,7 +173,22 @@ glob(program.src + '/*.jsx', function(er, files) {
         render += "          codeText={" + e + "}\n";
         render += "          scope={assign({React, " + example.component.component + "}, this.props.scope || {})}\n";
         render += "          noRender={" + ( example.playground.flags.noRenderFalse ? 'false' : 'true' ) + "}/>\n";
+
+        if (shownUsage[example.component.component] === undefined) {
+          if (example.component['uxUsage']) {
+            var html = "<h4>Usage (from UX)</h4>\n";
+            html += markdown(example.component['uxUsage']) + "\n";
+            render += indentString(html, ' ', 8);
+          }
+          if (example.component['uxSpecifications']) {
+            var html = "<h4>Specifications (from UX)</h4>\n";
+            html += markdown(example.component['uxSpecifications']) + "\n";
+            render += indentString(html, ' ', 8);
+          }
+          shownUsage[example.component.component] = true;
+        }
       }
+
       render += "      </div>\n";
       render += "    );\n";
       index = _demoReplace(index, 'render', render);

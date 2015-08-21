@@ -11,6 +11,12 @@ program
   .option('--portal <dir>', 'Dev portal root directory')
   .parse(process.argv);
 
+var _fixBackticks = function(str) {
+  str = str.replace(/```jsx/g, "{% highlight html %}");
+  str = str.replace(/```/g, "{% endhighlight %}");
+  return str;
+}
+
 var metadata = JSON.parse(fs.readFileSync(program.components).toString());
 
 var images = path.dirname(program.components) + "/images";
@@ -26,9 +32,11 @@ if (fs.existsSync(images)) {
 
 for (var c in metadata.components) {
   var component = metadata.components[c];
+  component.libraryTitle = metadata.title;
   if (component.component) {
     var fname = dirName + '/' + component.component.toLowerCase() + '.md';
     var md = generateMarkdown.generateDevPortal(component);
+    md = _fixBackticks(md);
     fs.writeFileSync(fname, md);
   }
 }
