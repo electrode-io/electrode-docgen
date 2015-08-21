@@ -141,7 +141,7 @@ glob(program.src + '/*.jsx', function(er, files) {
       for (var c in metadata.components) {
         var comp = metadata.components[c];
         if (comp.playground) {
-          imports += "import " + comp.component + " from '../" + comp.fileName + "';\n";
+          imports += "import " + comp.component + " from \"../" + comp.fileName + "\";\n";
           for (var p in comp.playground) {
             var pg = comp.playground[p];
 
@@ -151,7 +151,7 @@ glob(program.src + '/*.jsx', function(er, files) {
               playground: pg
             };
 
-            imports += "var " + example + " = require('raw!./examples/" + example + ".example');\n";
+            imports += "import " + example + " from \"raw!./examples/" + example + ".example\";\n";
 
             fs.writeFileSync(program.demo + '/examples/' + example + '.example', pg.code);
 
