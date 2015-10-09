@@ -10,6 +10,15 @@ var generateMarkdown = require('./generate-markdown');
 var markdown = require('markdown-js').makeHtml;
 var indentString = require('indent-string');
 
+var _mergeProps = function(comp1, comp2) {
+  var propMap = {};
+  for(var k in comp2.props) {
+    if(comp1.props[k] === undefined) {
+      comp1.props[k] = comp2.props[k];
+    }
+  }
+}
+
 var _parsePlayground = function(str) {
   var code = str.match(/(``|```)([\s\S]*)(``|```)/);
   if (code) {
@@ -121,7 +130,23 @@ glob(program.src + '/*.jsx', function(er, files) {
       } else {
         return 1;
       }
-    })
+    });
+
+    var componentsByName = {};
+    for(var i in metadata.components) {
+      var comp = metadata.components[i];
+      componentsByName[comp.component] = comp;
+    }
+
+    for(var i in metadata.components) {
+      var comp = metadata.components[i];
+      if(comp.wraps) {
+        var wrappedComp = componentsByName[comp.wraps];
+        if(wrappedComp) {
+          _mergeProps(comp, wrappedComp);
+        }
+      }
+    }
 
     if (program.metadata) {
       fs.writeFileSync(program.metadata,
