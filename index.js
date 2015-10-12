@@ -11,7 +11,6 @@ var markdown = require('markdown-js').makeHtml;
 var indentString = require('indent-string');
 
 var _mergeProps = function(comp1, comp2) {
-  var propMap = {};
   for(var k in comp2.props) {
     if(comp1.props[k] === undefined) {
       comp1.props[k] = comp2.props[k];
