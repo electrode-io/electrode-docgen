@@ -16,7 +16,7 @@ var _mergeProps = function(comp1, comp2) {
       comp1.props[k] = comp2.props[k];
     }
   }
-}
+};
 
 var _parsePlayground = function(str) {
   var code = str.match(/(``|```)([\s\S]*)(``|```)/);
