@@ -94,7 +94,7 @@ var metadata = {
   components: []
 };
 
-glob(program.src + '/*.jsx', function(er, files) {
+glob(program.src + '/*/**.jsx', function(er, files) {
   async.each(files, function(file, done) {
     var src = fs.readFileSync(file);
     try {
