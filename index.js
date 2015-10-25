@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
+var path = require('path');
 var reactDocs = require('react-docgen');
 var doctrine = require('doctrine');
 var program = require('commander');
@@ -68,15 +69,50 @@ var _parseTags = function(str, target) {
   }
 };
 
-var _demoReplace = function(code, section, content) {
-  var re = new RegExp('(\/\/\/ start ' + section + "\n" + '[\\s\\S]*\/\/\/ end ' + section + ')');
-  content = '/// start ' + section + "\n" + content + '/// end ' + section;
-  code = code.replace(re, content);
-  return code;
+function _createDemo(dir, done) {
+  glob(dir + '/data/*.*', function(er, files) {
+    var items = [];
+    for(var f in files) {
+      var file = files[f];
+      console.log(file);
+      items.push("  " +
+        path.basename(file, path.extname(file)) +
+        ": require(\"./data/" +
+        path.basename(file) +
+        "\")");
+    }
+    var data = "module.exports = {\n" +
+      items.join(",\n") +
+      "\n};\n";
+    console.log('Writing ' + dir + '/data.jsx');
+    fs.writeFileSync(dir + '/data.jsx', data);
+    done();
+  });
+}
+
+function _createImages(dir, done) {
+  glob(dir + '/images/*.*', function(er, files) {
+    var items = [];
+    for(var f in files) {
+      var file = files[f];
+      console.log(file);
+      items.push("  \"" +
+        path.basename(file, path.extname(file)) +
+        "\": require(\"./images/" +
+        path.basename(file) +
+        "\")");
+    }
+    var images = "module.exports = {\n" +
+      items.join(",\n") +
+      "\n};\n";
+    console.log('Writing ' + dir + '/images.jsx');
+    fs.writeFileSync(dir + '/images.jsx', images);
+    done();
+  });
 }
 
 program
-  .version('0.0.12')
+  .version('0.0.17')
   .option('-s --src <dir>', 'Source location', null, 'src')
   .option('-p --package <package>', 'Package file', null, 'package.json')
   .option('--metadata <file>', 'Metadata output file')
@@ -157,68 +193,10 @@ glob(program.src + '/*/**.jsx', function(er, files) {
     }
 
     if (program.demo) {
-      var index = fs.readFileSync(program.demo + '/index.jsx').toString();
-
-      var imports = "";
-      var examples = {};
-      var eIndex = 1;
-      for (var c in metadata.components) {
-        var comp = metadata.components[c];
-        if (comp.playground) {
-          imports += "import " + comp.component + " from \"../" + comp.fileName + "\";\n";
-          for (var p in comp.playground) {
-            var pg = comp.playground[p];
-
-            var example = "example" + eIndex;
-            examples[example] = {
-              component: comp,
-              playground: pg
-            };
-
-            imports += "import " + example + " from \"raw!./examples/" + example + ".example\";\n";
-
-            fs.writeFileSync(program.demo + '/examples/' + example + '.example', pg.code);
-
-            eIndex++;
-          }
-        }
-      }
-      index = _demoReplace(index, 'imports', imports);
-
-      var shownUsage = {};
-
-      var render = "";
-      render += "    return (\n";
-      render += "      <div className=\"component-documentation\">\n";
-      for (var e in examples) {
-        var example = examples[e];
-        render += "        <h3 id={\"" + example.playground.title + "\"}>" + example.playground.title + "</h3>\n";
-        render += "        <Playground\n";
-        render += "          codeText={" + e + "}\n";
-        render += "          scope={assign({React, " + example.component.component + "}, this.props.scope || {})}\n";
-        render += "          noRender={" + ( example.playground.flags.noRenderFalse ? 'false' : 'true' ) + "}/>\n";
-
-        if (shownUsage[example.component.component] === undefined) {
-          if (example.component['uxUsage']) {
-            var html = "<h4>Usage (from UX)</h4>\n";
-            html += markdown(example.component['uxUsage']) + "\n";
-            render += indentString(html, ' ', 8);
-          }
-          if (example.component['uxSpecifications']) {
-            var html = "<h4>Specifications (from UX)</h4>\n";
-            html += markdown(example.component['uxSpecifications']) + "\n";
-            render += indentString(html, ' ', 8);
-          }
-          shownUsage[example.component.component] = true;
-        }
-      }
-
-      render += "      </div>\n";
-      render += "    );\n";
-      index = _demoReplace(index, 'render', render);
-
-      console.log('Writing ' + program.demo + '/index.jsx');
-      fs.writeFileSync(program.demo + '/index.jsx', index);
+      async.series([
+        function(done) { _createDemo(program.demo, done); },
+        function(done) { _createImages(program.demo, done); }
+      ]);
     }
   });
 });
