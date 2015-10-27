@@ -58,6 +58,12 @@ var _parseTags = function(str, target) {
         target[tk] = [];
       }
       target[tk].push(_parsePlayground(tv));
+    } if (tk === 'synonym') {
+      if (target[tk]) {
+        target[tk].push(tv);
+      } else {
+        target[tk] = [tv];
+      }
     } else {
       if (target[tk]) {
         target[tk] = [target[tk]];
