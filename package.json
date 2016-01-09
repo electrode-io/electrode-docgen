@@ -1,6 +1,6 @@
 {
   "name": "@walmart/electrode-docgen",
-  "version": "0.0.19",
+  "version": "1.0.0",
   "description": "Electrode document generator",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "glob": "^5.0.14",
     "handlebars": "^3.0.3",
     "indent-string": "^2.1.0",
-    "markdown-js": "0.0.3",
+    "markdown-js": "~0.0.3",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "react-docgen": "^2.0.0"
