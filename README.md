@@ -74,7 +74,7 @@ Fixie
 
 const foo = [];
 
-/*documentation comment*/
+/*JSDoc comment*/
 
 class Foo extends React.Component {...}
 ```
@@ -82,7 +82,7 @@ class Foo extends React.Component {...}
 ```
 // BAD
 
-/*documentation comment*/
+/*JSDoc comment*/
 
 const foo = [];
 
