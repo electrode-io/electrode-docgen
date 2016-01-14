@@ -67,6 +67,28 @@ Fixie
 ``
 ```
 
+***NOTE***: In order to generate documentation correctly there should not be any statements between your documentation comment and React class declaration, for e.g.
+
+```
+// GOOD
+
+const foo = [];
+
+/*documentation comment*/
+
+class Foo extends React.Component {...}
+```
+
+```
+// BAD
+
+/*documentation comment*/
+
+const foo = [];
+
+class Foo extends React.Component {...}
+```
+
 ## Auto generated demo
 
 ```
