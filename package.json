@@ -1,5 +1,5 @@
 {
-  "name": "@walmart/electrode-docgen",
+  "name": "electrode-docgen",
   "version": "1.0.0",
   "description": "Electrode document generator",
   "main": "index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://gecgithub01.walmart.com/react/electrode-docgen.git"
+    "url": "https://github.walmart.com/electrodejs/electrode-docgen.git"
   },
   "author": "jherrington@walmartlabs.com",
   "license": "MIT",
