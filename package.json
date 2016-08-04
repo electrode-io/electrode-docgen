@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.walmart.com/electrodejs/electrode-docgen.git"
+    "url": "https://github.com/electrodeio/electrode-docgen.git"
   },
   "author": "jherrington@walmartlabs.com",
   "license": "MIT",
