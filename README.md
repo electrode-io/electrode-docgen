@@ -108,3 +108,5 @@ Before submitting an issue, please see the [Issue Submission Guidelines](https:/
 ## Contributing
 
 If you're interested in contributing, see the [React Developer Guide's Contribution Guide](https://gecgithub01.walmart.com/react/react-dev-guide#contributing)
+
+Built with :heart: by [Team Electrode](https://github.com/orgs/electrode-io/people) @WalmartLabs.

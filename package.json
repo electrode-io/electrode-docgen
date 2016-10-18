@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/electrodeio/electrode-docgen.git"
+    "url": "https://github.com/electrode-io/electrode-docgen.git"
   },
   "author": "jherrington@walmartlabs.com",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "async": "^1.4.0",
     "commander": "^2.8.1",
