@@ -3,7 +3,7 @@ Electrode Documentation Generator
 
 A custom metadata extractor for the Electrode framework.
 
-> Before getting started, please make sure you read the [React Developer Guide](https://gecgithub01.walmart.com/react/react-dev-guide)!
+> Before getting started, please make sure you read the [Developer Guide]
 
 ## Running it
 
@@ -103,10 +103,12 @@ class Foo extends React.Component {...}
 
 ## Issues
 
-Before submitting an issue, please see the [Issue Submission Guidelines](https://gecgithub01.walmart.com/react/react-dev-guide#submitting-issues)
+Before submitting an issue, please see the [Issue Submission Guidelines](https://github.com/electrode-io/electrode-docgen/blob/master/DEVGUIDE.md#submitting-issues)
 
 ## Contributing
 
-If you're interested in contributing, see the [React Developer Guide's Contribution Guide](https://gecgithub01.walmart.com/react/react-dev-guide#contributing)
+If you're interested in contributing, see the [Developer Guide's Contribution Guide](https://github.com/electrode-io/electrode-docgen/blob/master/DEVGUIDE.md#contributing)
 
 Built with :heart: by [Team Electrode](https://github.com/orgs/electrode-io/people) @WalmartLabs.
+
+[Developer Guide]: https://github.com/electrode-io/electrode-docgen/blob/master/DEVGUIDE.md
