@@ -260,7 +260,7 @@ Note the two space indent. This makes sense for us because our component names c
 
 ## ES6
 
-We like ES6 a lot and we prefer its use over the often more verbose ES5. For details check out the ES6 guide https://gecgithub01.walmart.com/react/es6-guide
+We like ES6 a lot and we prefer its use over the often more verbose ES5. For details check out the ES6 guide https://github.com/electrode-io/electrode-docgen/blob/master/ES6GUIDE.md
 
 * We prefer `const` over `let` over `var` - `var` is considered deprecated.
 * We prefer dropping the `function` keyword when possible.
