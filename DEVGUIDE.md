@@ -109,7 +109,7 @@ In the PR comment include a short description of changes, any relevant screensho
 
 ## Walmart React Code Style
 
-This is our recommendation for React code. It's based on [https://reactjsnews.com/react-style-guide-patterns-i-like/](https://reactjsnews.com/react-style-guide-patterns-i-like/).
+This is our recommendation for React code. It's based on [https://reactjsnews.com/react-style-guide-patterns-i-like](https://reactjsnews.com/react-style-guide-patterns-i-like).
 
 ### Five Lines
 
